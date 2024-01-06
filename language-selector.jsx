@@ -1,6 +1,5 @@
-import {Fragment, useEffect, useLayoutEffect, useState} from 'react'
+import {Fragment, useEffect, useLayoutEffect, useRef, useState} from 'react'
 import {Listbox, Transition} from '@headlessui/react'
-import {ChevronUpDownIcon} from '@heroicons/react/20/solid'
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -13,35 +12,40 @@ const languages = [
     {
         id: 2,
         name: 'notrans(简体中文)',
-        code: 'zh',
+        code: 'zh-CN',
     },
     {
         id: 3,
+        name: 'notrans(繁體中文)',
+        code: 'zh-TW',
+    },
+    {
+        id: 4,
         name: 'notrans(Français)',
         code: 'fr'
     },
     {
-        id: 4,
+        id: 5,
         name: 'notrans(Deutsch)',
         code: 'de'
     },
     {
-        id: 5,
+        id: 6,
         name: 'notrans(日本語)',
         code: 'ja'
     },
     {
-        id: 6,
+        id: 7,
         name: 'notrans(韓国語)',
         code: 'ko'
     },
     {
-        id: 7,
+        id: 8,
         name: 'notrans(Español)',
         code: 'es'
     },
     {
-        id: 8,
+        id: 9,
         name: 'notrans(Italiano)',
         code: 'it'
     }
@@ -75,14 +79,7 @@ function reloadPage(langCode) {
 
     pathname = `/${langCode}${pathname}`
 
-    let href = ""
-    if (url.protocol.length === 0) {
-        href = `${url.protocol}//${url.hostname}${pathname}`
-    } else {
-        href = `${url.protocol}//${url.hostname}:${url.port}${pathname}`
-    }
-
-    window.location.href = href;
+    window.location.href = pathname;
 }
 
 function getLang() {
@@ -122,7 +119,7 @@ export function LanguageSelector() {
     useLayoutEffect(() => {
         setLang(getLangItem(getLang()))
     }, [])
-
+   
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
