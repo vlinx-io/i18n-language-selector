@@ -117,12 +117,10 @@ export function LanguageSelector() {
     const [lang, setLang] = useState({})
     let [firstRender, setFirstRender] = useState(true)
 
-    // 在组件渲染前执行，且仅在加载的时候执行一次
     useLayoutEffect(() => {
         setLang(getLangItem(getLang()))
     }, [])
 
-    // 组件渲染完成之后执行，只会在useLayoutEffect之后执行，第一次触发时firstRender的判断是有效的，后面当lang发生变化时触发
     useEffect(() => {
         if (firstRender) {
             setFirstRender(false)
